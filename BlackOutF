@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function output(){
+        name=output
+        if  -e $name.ext || -L $name.ext
+        then
+        i=0
+        while -e $name-$i.ext || -L $name-$i.ext
+        do
+                let i++
+        done
+        name=$name-$i
+        fi
+        touch -- "$name".ext
+}
+
+function csv_collection(){
+        while IFS=, read -r col1
+        do
+        awk -F "," '{print $1}' $output.csv
+        done >> BSSID.csv 
+}
